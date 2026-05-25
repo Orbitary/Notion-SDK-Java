@@ -3,14 +3,11 @@ plugins {
 }
 
 group = "xyz.orbitary"
-version = "0.1.0"
+version = "0.0.1"
 
 allprojects {
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
-        }
-    }
+    group = rootProject.group
+    version = rootProject.version
 
     repositories {
         mavenLocal()
@@ -33,5 +30,9 @@ allprojects {
                 }
             }
         }
+    }
+
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(21)
     }
 }

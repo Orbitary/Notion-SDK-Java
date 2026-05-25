@@ -1,4 +1,4 @@
-rootProject.name = "notion-sdk-java"
+rootProject.name = "Notion-SDK"
 
 pluginManagement {
     repositories {
