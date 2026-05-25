@@ -10,6 +10,7 @@ import xyz.orbitary.notion.exception.NotionRateLimitException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static xyz.bitsquidd.bits.util.serializer.JsonHelper.extractText;
 import static xyz.bitsquidd.bits.util.serializer.SerializationManager.SERIALIZER;
 
 
@@ -96,8 +97,8 @@ public class NotionHttpClient {
             if (code >= 200 && code < 300) {
                 return parser.parse(body);
             }
-            String notionCode = extractField(body, "code");
-            String message = extractField(body, "message");
+            String notionCode = extractText(body, "code", "unknown");
+            String message = extractText(body, "message", "unknown");
             switch (code) {
                 case 401, 403 -> throw new NotionAuthException(code, notionCode, message);
                 case 404 -> throw new NotionNotFoundException(notionCode, message);
@@ -113,12 +114,5 @@ public class NotionHttpClient {
         }
     }
 
-    private String extractField(String body, String field) {
-        try {
-            return SERIALIZER.readTree(body).path(field).asText("unknown");
-        } catch (IOException e) {
-            return "unknown";
-        }
-    }
 
 }

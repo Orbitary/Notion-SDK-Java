@@ -20,7 +20,7 @@ public class NotionBlock implements NotionObject {
     private final NotionUser createdBy;
     private final OffsetDateTime lastEditedTime;
     private final NotionUser lastEditedBy;
-    private final boolean inTrash;
+    private final @Nullable Boolean inTrash;
     private final String type;
     private final Parent parent;
     private final boolean hasChildren;
@@ -33,7 +33,7 @@ public class NotionBlock implements NotionObject {
             @JsonProperty("created_by") NotionUser createdBy,
             @JsonProperty("last_edited_time") OffsetDateTime lastEditedTime,
             @JsonProperty("last_edited_by") NotionUser lastEditedBy,
-            @JsonProperty("in_trash") boolean inTrash,
+            @JsonProperty("in_trash") @Nullable Boolean inTrash,
 
             @JsonProperty("type") String type,
             @JsonProperty("parent") Parent parent,
@@ -76,7 +76,7 @@ public class NotionBlock implements NotionObject {
     }
 
     @Override
-    public boolean inTrash() {
+    public @Nullable Boolean inTrash() {
         return inTrash;
     }
 

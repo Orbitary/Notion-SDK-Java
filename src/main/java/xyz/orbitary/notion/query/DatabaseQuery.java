@@ -1,6 +1,7 @@
 package xyz.orbitary.notion.query;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.jetbrains.annotations.Nullable;
 import xyz.orbitary.notion.Notion;
 import xyz.orbitary.notion.http.NotionHttpClient;
 import xyz.orbitary.notion.model.common.PaginatedList;
@@ -13,10 +14,10 @@ import java.util.stream.Collectors;
 public class DatabaseQuery {
     private final NotionHttpClient http = Notion.get().http();
     private final String databaseId;
-    private Filter filter;
+    private @Nullable Filter filter;
+    private @Nullable Integer pageSize;
+    private @Nullable String startCursor;
     private final List<Sort> sorts = new ArrayList<>();
-    private Integer pageSize;
-    private String startCursor;
 
     public DatabaseQuery(String databaseId) {
         this.databaseId = databaseId;
@@ -24,11 +25,6 @@ public class DatabaseQuery {
 
     public DatabaseQuery filter(Filter filter) {
         this.filter = filter;
-        return this;
-    }
-
-    public DatabaseQuery sort(Sort... sorts) {
-        this.sorts.addAll(Arrays.asList(sorts));
         return this;
     }
 
@@ -42,6 +38,11 @@ public class DatabaseQuery {
         return this;
     }
 
+    public DatabaseQuery sort(Sort... sorts) {
+        this.sorts.addAll(Arrays.asList(sorts));
+        return this;
+    }
+
     public PaginatedList<NotionPage> execute() {
         Map<String, Object> body = new HashMap<>();
         if (filter != null) body.put("filter", filter.toJson());
@@ -49,7 +50,7 @@ public class DatabaseQuery {
         if (pageSize != null) body.put("page_size", pageSize);
         if (startCursor != null) body.put("start_cursor", startCursor);
         return http.post("/databases/" + databaseId + "/query", body,
-                new TypeReference<PaginatedList<NotionPage>>() {
+                new TypeReference<>() {
                 });
     }
 
@@ -58,9 +59,9 @@ public class DatabaseQuery {
         boolean hasMore = true;
         while (hasMore) {
             PaginatedList<NotionPage> page = execute();
-            all.addAll(page.getResults());
-            hasMore = page.isHasMore();
-            this.startCursor = page.getNextCursor();
+            all.addAll(page.results());
+            hasMore = page.hasMore();
+            this.startCursor = page.nextCursor();
         }
         return all;
     }

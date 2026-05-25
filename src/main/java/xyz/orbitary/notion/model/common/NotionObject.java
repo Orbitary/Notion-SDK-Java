@@ -1,5 +1,6 @@
 package xyz.orbitary.notion.model.common;
 
+import org.jetbrains.annotations.Nullable;
 import xyz.orbitary.notion.model.user.NotionUser;
 
 import java.time.OffsetDateTime;
@@ -8,14 +9,14 @@ import java.time.OffsetDateTime;
 public interface NotionObject {
     String id();
 
-    OffsetDateTime createdTime();
+    @Nullable OffsetDateTime createdTime();
 
-    NotionUser createdBy();
+    @Nullable NotionUser createdBy();
 
-    OffsetDateTime lastEditedTime();
+    @Nullable OffsetDateTime lastEditedTime();
 
-    NotionUser lastEditedBy();
+    @Nullable NotionUser lastEditedBy();
 
-    boolean inTrash();
+    @Nullable Boolean inTrash();
 
 }
