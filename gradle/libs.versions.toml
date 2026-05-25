@@ -1,0 +1,9 @@
+[versions]
+bits = "0.0.+"
+
+[libraries]
+bits-api = { group = "xyz.bitsquidd.bits", name = "api", version.ref = "bits" }
+
+
+[plugins]
+bit-convention = { id = "xyz.bitsquidd.convention", version = "1.0.+" }
