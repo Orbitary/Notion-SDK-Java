@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "xyz.orbitary.notion"
-version = "0.0.1"
+version = property("version") as String
 
 allprojects {
     group = rootProject.group

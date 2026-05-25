@@ -1,6 +1,7 @@
 package xyz.orbitary.notion.query;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.jetbrains.annotations.Nullable;
 import xyz.orbitary.notion.Notion;
 import xyz.orbitary.notion.http.NotionHttpClient;
 import xyz.orbitary.notion.model.common.PaginatedList;
@@ -12,11 +13,11 @@ import java.util.Map;
 
 public class SearchQuery {
     private final NotionHttpClient http = Notion.get().http();
-    private String query;
-    private String filterType;
-    private String sortDirection;
-    private Integer pageSize;
-    private String startCursor;
+    private @Nullable String query;
+    private @Nullable String filterType;
+    private @Nullable String sortDirection;
+    private @Nullable Integer pageSize;
+    private @Nullable String startCursor;
 
     public SearchQuery query(String query) {
         this.query = query;
