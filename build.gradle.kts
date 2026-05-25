@@ -9,12 +9,6 @@ allprojects {
     group = rootProject.group
     version = rootProject.version
 
-    repositories {
-        mavenLocal()
-        uri("https://repo.bitsquidd.xyz/repository/bit/")
-        mavenCentral()
-    }
-
     dependencies {
         api("com.squareup.okhttp3:okhttp:4.12.0")
         implementation(libs.bits.api)
