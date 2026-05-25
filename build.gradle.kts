@@ -10,8 +10,8 @@ allprojects {
     version = rootProject.version
 
     dependencies {
-        api("com.squareup.okhttp3:okhttp:4.12.0")
-        implementation(libs.bits.api)
+        api(rootProject.libs.okhttp)
+        implementation(rootProject.libs.bits.api)
     }
 
     publishing {
