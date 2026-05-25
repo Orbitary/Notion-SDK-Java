@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.bit.convention)
 }
 
-group = "xyz.orbitary"
+group = "xyz.orbitary.notion"
 version = "0.0.1"
 
 allprojects {
