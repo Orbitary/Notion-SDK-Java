@@ -1,69 +1,31 @@
 package xyz.orbitary.notion.model.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jetbrains.annotations.Nullable;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Icon {
-    private String type;
-    private String emoji;
-    private FileObject external;
-    private FileObject file;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getEmoji() {
-        return emoji;
-    }
-
-    public void setEmoji(String emoji) {
-        this.emoji = emoji;
-    }
-
-    public FileObject getExternal() {
-        return external;
-    }
-
-    public void setExternal(FileObject v) {
-        this.external = v;
-    }
-
-    public FileObject getFile() {
-        return file;
-    }
-
-    public void setFile(FileObject file) {
-        this.file = file;
-    }
-
-    public String getUrl() {
+public record Icon(
+        @JsonProperty("type") @Nullable String type,
+        @JsonProperty("emoji") @Nullable String emoji,
+        @JsonProperty("external") @Nullable FileObject external,
+        @JsonProperty("file") @Nullable FileObject file
+) {
+    public @Nullable String url() {
         if (type == null) return null;
         return switch (type) {
             case "emoji" -> emoji;
-            case "external" -> external != null ? external.getUrl() : null;
-            case "file" -> file != null ? file.getUrl() : null;
+            case "external" -> external != null ? external.url() : null;
+            case "file" -> file != null ? file.url() : null;
             default -> null;
         };
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class FileObject {
-        private String url;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
+    public record FileObject(
+            @JsonProperty("url") String url
+    ) {
     }
 
 }

@@ -4,56 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import xyz.orbitary.notion.model.common.NotionObject;
 
+import java.time.OffsetDateTime;
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NotionUser extends NotionObject {
-    private String name;
-    @JsonProperty("avatar_url")
-    private String avatarUrl;
-    private String type;
-    private Person person;
-    private Bot bot;
+public record NotionUser(
+        @JsonProperty("id") String id,
+        @JsonProperty("created_time") OffsetDateTime createdTime,
+        @JsonProperty("created_by") NotionUser createdBy,
+        @JsonProperty("last_edited_time") OffsetDateTime lastEditedTime,
+        @JsonProperty("last_edited_by") NotionUser lastEditedBy,
+        @JsonProperty("in_trash") boolean inTrash,
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String v) {
-        this.avatarUrl = v;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public Bot getBot() {
-        return bot;
-    }
-
-    public void setBot(Bot bot) {
-        this.bot = bot;
-    }
-
+        @JsonProperty("name") String name,
+        @JsonProperty("avatar_url") String avatarUrl,
+        @JsonProperty("type") String type,
+        @JsonProperty("person") Person person,
+        @JsonProperty("bot") Bot bot
+) implements NotionObject {
     public boolean isPerson() {
         return "person".equals(type);
     }
@@ -62,43 +30,18 @@ public class NotionUser extends NotionObject {
         return "bot".equals(type);
     }
 
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Person {
-        private String email;
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
+    public record Person(
+            @JsonProperty("email") String email
+    ) {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Bot {
-        @JsonProperty("workspace_id")
-        private String workspaceId;
-        @JsonProperty("workspace_name")
-        private String workspaceName;
-
-        public String getWorkspaceId() {
-            return workspaceId;
-        }
-
-        public void setWorkspaceId(String v) {
-            this.workspaceId = v;
-        }
-
-        public String getWorkspaceName() {
-            return workspaceName;
-        }
-
-        public void setWorkspaceName(String v) {
-            this.workspaceName = v;
-        }
-
+    public record Bot(
+            @JsonProperty("workspace_id") String workspaceId,
+            @JsonProperty("workspace_name") String workspaceName
+    ) {
     }
 
 }

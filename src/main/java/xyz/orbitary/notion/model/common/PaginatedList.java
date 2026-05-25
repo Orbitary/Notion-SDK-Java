@@ -7,35 +7,9 @@ import java.util.List;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PaginatedList<T> {
-    private List<T> results;
-    @JsonProperty("next_cursor")
-    private String nextCursor;
-    @JsonProperty("has_more")
-    private boolean hasMore;
-
-    public List<T> getResults() {
-        return results;
-    }
-
-    public void setResults(List<T> results) {
-        this.results = results;
-    }
-
-    public String getNextCursor() {
-        return nextCursor;
-    }
-
-    public void setNextCursor(String v) {
-        this.nextCursor = v;
-    }
-
-    public boolean isHasMore() {
-        return hasMore;
-    }
-
-    public void setHasMore(boolean v) {
-        this.hasMore = v;
-    }
-
+public record PaginatedList<T>(
+        @JsonProperty("results") List<T> results,
+        @JsonProperty("next_cursor") String nextCursor,
+        @JsonProperty("has_more") boolean hasMore
+) {
 }
